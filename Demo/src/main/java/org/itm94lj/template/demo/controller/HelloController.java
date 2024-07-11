@@ -1,14 +1,18 @@
 package org.itm94lj.template.demo.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
+@Api(tags = "HelloController", description = "Hello模块")
+@RequestMapping("/hello")
 public class HelloController {
 
-    @RequestMapping(value="hello", method= RequestMethod.GET)
+    @ApiOperation("Hello方法调用")
+    @RequestMapping(value = "/say", method = RequestMethod.GET)
     @ResponseBody
     public String sayHello() {
         return "hello";
