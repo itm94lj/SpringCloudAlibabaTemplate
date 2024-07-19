@@ -1,23 +1,23 @@
 package org.itm94lj.template.demo.config;
 
 
-import org.springframework.context.annotation.Bean;
+import org.itm94lj.template.common.config.BaseSwaggerConfig;
+import org.itm94lj.template.common.domain.SwaggerProperties;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+public class SwaggerConfig  extends BaseSwaggerConfig {
+    @Override
+    public SwaggerProperties swaggerProperties() {
+        return SwaggerProperties.builder()
+                .apiBasePackage("org.itm94lj.template.demo")
+                .title("template 示例系统")
+                .description("template 示例相关接口文档")
+                .contactName("itm94lj")
+                .version("1.0")
+                .enableSecurity(false)
                 .build();
     }
 }

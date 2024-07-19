@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itm94lj.template.mapper.PmsProductMapper">
+  <resultMap id="BaseResultMap" type="org.itm94lj.template.model.PmsProduct">
+    <id column="ProductId" jdbcType="BIGINT" property="productid" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRODUCT_PIC" jdbcType="VARCHAR" property="productPic" />
+    <result column="PRODUCT_SN" jdbcType="VARCHAR" property="productSn" />
+    <result column="DELETE_STATUS" jdbcType="INTEGER" property="deleteStatus" />
+    <result column="PUBLISH_STATUS" jdbcType="INTEGER" property="publishStatus" />
+    <result column="NEW_STATUS" jdbcType="INTEGER" property="newStatus" />
+    <result column="RECOMMAND_STATUS" jdbcType="INTEGER" property="recommandStatus" />
+    <result column="VERIFY_STATUS" jdbcType="INTEGER" property="verifyStatus" />
+    <result column="Sale" jdbcType="INTEGER" property="sale" />
+    <result column="Price" jdbcType="DECIMAL" property="price" />
+    <result column="PromotionPrice" jdbcType="DECIMAL" property="promotionprice" />
+    <result column="GiftGrowth" jdbcType="INTEGER" property="giftgrowth" />
+    <result column="GiftPoint" jdbcType="INTEGER" property="giftpoint" />
+    <result column="UsePointLimit" jdbcType="INTEGER" property="usepointlimit" />
+    <result column="SubTitle" jdbcType="VARCHAR" property="subtitle" />
+    <result column="OriginalPrice" jdbcType="DECIMAL" property="originalprice" />
+    <result column="Stock" jdbcType="INTEGER" property="stock" />
+    <result column="LowStock" jdbcType="INTEGER" property="lowstock" />
+    <result column="Unit" jdbcType="VARCHAR" property="unit" />
+    <result column="Weight" jdbcType="DECIMAL" property="weight" />
+    <result column="PreviewStatus" jdbcType="INTEGER" property="previewstatus" />
+    <result column="ServiceIds" jdbcType="VARCHAR" property="serviceids" />
+    <result column="Keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="Note" jdbcType="VARCHAR" property="note" />
+    <result column="AlbumPics" jdbcType="VARCHAR" property="albumpics" />
+    <result column="DetailTitle" jdbcType="VARCHAR" property="detailtitle" />
+    <result column="PromotionStartTime" jdbcType="TIMESTAMP" property="promotionstarttime" />
+    <result column="PromotionEndTime" jdbcType="TIMESTAMP" property="promotionendtime" />
+    <result column="PromotionPerLimit" jdbcType="INTEGER" property="promotionperlimit" />
+    <result column="ProductCategoryName" jdbcType="VARCHAR" property="productcategoryname" />
+    <result column="BrandName" jdbcType="VARCHAR" property="brandname" />
+    <result column="id" jdbcType="BIGINT" property="id" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.itm94lj.template.model.PmsProduct">
+    <result column="Discription" jdbcType="LONGVARCHAR" property="discription" />
+    <result column="DetailDesc" jdbcType="LONGVARCHAR" property="detaildesc" />
+    <result column="DetailHtml" jdbcType="LONGVARCHAR" property="detailhtml" />
+    <result column="DetailMobileHtml" jdbcType="LONGVARCHAR" property="detailmobilehtml" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ProductId, PRODUCT_NAME, PRODUCT_PIC, PRODUCT_SN, DELETE_STATUS, PUBLISH_STATUS, 
+    NEW_STATUS, RECOMMAND_STATUS, VERIFY_STATUS, Sale, Price, PromotionPrice, GiftGrowth, 
+    GiftPoint, UsePointLimit, SubTitle, OriginalPrice, Stock, LowStock, Unit, Weight, 
+    PreviewStatus, ServiceIds, Keywords, Note, AlbumPics, DetailTitle, PromotionStartTime, 
+    PromotionEndTime, PromotionPerLimit, ProductCategoryName, BrandName, id
+  </sql>
+  <sql id="Blob_Column_List">
+    Discription, DetailDesc, DetailHtml, DetailMobileHtml
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="org.itm94lj.template.model.PmsProductExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pms_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="org.itm94lj.template.model.PmsProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pms_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pms_product
+    where ProductId = #{productid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pms_product
+    where ProductId = #{productid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itm94lj.template.model.PmsProductExample">
+    delete from pms_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itm94lj.template.model.PmsProduct">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pms_product (ProductId, PRODUCT_NAME, PRODUCT_PIC, 
+      PRODUCT_SN, DELETE_STATUS, PUBLISH_STATUS, 
+      NEW_STATUS, RECOMMAND_STATUS, VERIFY_STATUS, 
+      Sale, Price, PromotionPrice, 
+      GiftGrowth, GiftPoint, UsePointLimit, 
+      SubTitle, OriginalPrice, Stock, 
+      LowStock, Unit, Weight, 
+      PreviewStatus, ServiceIds, Keywords, 
+      Note, AlbumPics, DetailTitle, 
+      PromotionStartTime, PromotionEndTime, 
+      PromotionPerLimit, ProductCategoryName, 
+      BrandName, Discription, DetailDesc, 
+      DetailHtml, DetailMobileHtml)
+    values (#{productid,jdbcType=BIGINT}, #{productName,jdbcType=VARCHAR}, #{productPic,jdbcType=VARCHAR}, 
+      #{productSn,jdbcType=VARCHAR}, #{deleteStatus,jdbcType=INTEGER}, #{publishStatus,jdbcType=INTEGER}, 
+      #{newStatus,jdbcType=INTEGER}, #{recommandStatus,jdbcType=INTEGER}, #{verifyStatus,jdbcType=INTEGER}, 
+      #{sale,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{promotionprice,jdbcType=DECIMAL}, 
+      #{giftgrowth,jdbcType=INTEGER}, #{giftpoint,jdbcType=INTEGER}, #{usepointlimit,jdbcType=INTEGER}, 
+      #{subtitle,jdbcType=VARCHAR}, #{originalprice,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, 
+      #{lowstock,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, #{weight,jdbcType=DECIMAL}, 
+      #{previewstatus,jdbcType=INTEGER}, #{serviceids,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR}, #{albumpics,jdbcType=VARCHAR}, #{detailtitle,jdbcType=VARCHAR}, 
+      #{promotionstarttime,jdbcType=TIMESTAMP}, #{promotionendtime,jdbcType=TIMESTAMP}, 
+      #{promotionperlimit,jdbcType=INTEGER}, #{productcategoryname,jdbcType=VARCHAR}, 
+      #{brandname,jdbcType=VARCHAR}, #{discription,jdbcType=LONGVARCHAR}, #{detaildesc,jdbcType=LONGVARCHAR}, 
+      #{detailhtml,jdbcType=LONGVARCHAR}, #{detailmobilehtml,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itm94lj.template.model.PmsProduct">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pms_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productid != null">
+        ProductId,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="productPic != null">
+        PRODUCT_PIC,
+      </if>
+      <if test="productSn != null">
+        PRODUCT_SN,
+      </if>
+      <if test="deleteStatus != null">
+        DELETE_STATUS,
+      </if>
+      <if test="publishStatus != null">
+        PUBLISH_STATUS,
+      </if>
+      <if test="newStatus != null">
+        NEW_STATUS,
+      </if>
+      <if test="recommandStatus != null">
+        RECOMMAND_STATUS,
+      </if>
+      <if test="verifyStatus != null">
+        VERIFY_STATUS,
+      </if>
+      <if test="sale != null">
+        Sale,
+      </if>
+      <if test="price != null">
+        Price,
+      </if>
+      <if test="promotionprice != null">
+        PromotionPrice,
+      </if>
+      <if test="giftgrowth != null">
+        GiftGrowth,
+      </if>
+      <if test="giftpoint != null">
+        GiftPoint,
+      </if>
+      <if test="usepointlimit != null">
+        UsePointLimit,
+      </if>
+      <if test="subtitle != null">
+        SubTitle,
+      </if>
+      <if test="originalprice != null">
+        OriginalPrice,
+      </if>
+      <if test="stock != null">
+        Stock,
+      </if>
+      <if test="lowstock != null">
+        LowStock,
+      </if>
+      <if test="unit != null">
+        Unit,
+      </if>
+      <if test="weight != null">
+        Weight,
+      </if>
+      <if test="previewstatus != null">
+        PreviewStatus,
+      </if>
+      <if test="serviceids != null">
+        ServiceIds,
+      </if>
+      <if test="keywords != null">
+        Keywords,
+      </if>
+      <if test="note != null">
+        Note,
+      </if>
+      <if test="albumpics != null">
+        AlbumPics,
+      </if>
+      <if test="detailtitle != null">
+        DetailTitle,
+      </if>
+      <if test="promotionstarttime != null">
+        PromotionStartTime,
+      </if>
+      <if test="promotionendtime != null">
+        PromotionEndTime,
+      </if>
+      <if test="promotionperlimit != null">
+        PromotionPerLimit,
+      </if>
+      <if test="productcategoryname != null">
+        ProductCategoryName,
+      </if>
+      <if test="brandname != null">
+        BrandName,
+      </if>
+      <if test="discription != null">
+        Discription,
+      </if>
+      <if test="detaildesc != null">
+        DetailDesc,
+      </if>
+      <if test="detailhtml != null">
+        DetailHtml,
+      </if>
+      <if test="detailmobilehtml != null">
+        DetailMobileHtml,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productid != null">
+        #{productid,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPic != null">
+        #{productPic,jdbcType=VARCHAR},
+      </if>
+      <if test="productSn != null">
+        #{productSn,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="publishStatus != null">
+        #{publishStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newStatus != null">
+        #{newStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recommandStatus != null">
+        #{recommandStatus,jdbcType=INTEGER},
+      </if>
+      <if test="verifyStatus != null">
+        #{verifyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sale != null">
+        #{sale,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionprice != null">
+        #{promotionprice,jdbcType=DECIMAL},
+      </if>
+      <if test="giftgrowth != null">
+        #{giftgrowth,jdbcType=INTEGER},
+      </if>
+      <if test="giftpoint != null">
+        #{giftpoint,jdbcType=INTEGER},
+      </if>
+      <if test="usepointlimit != null">
+        #{usepointlimit,jdbcType=INTEGER},
+      </if>
+      <if test="subtitle != null">
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="originalprice != null">
+        #{originalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="lowstock != null">
+        #{lowstock,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="previewstatus != null">
+        #{previewstatus,jdbcType=INTEGER},
+      </if>
+      <if test="serviceids != null">
+        #{serviceids,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null">
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="albumpics != null">
+        #{albumpics,jdbcType=VARCHAR},
+      </if>
+      <if test="detailtitle != null">
+        #{detailtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionstarttime != null">
+        #{promotionstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionendtime != null">
+        #{promotionendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionperlimit != null">
+        #{promotionperlimit,jdbcType=INTEGER},
+      </if>
+      <if test="productcategoryname != null">
+        #{productcategoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="brandname != null">
+        #{brandname,jdbcType=VARCHAR},
+      </if>
+      <if test="discription != null">
+        #{discription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detaildesc != null">
+        #{detaildesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailhtml != null">
+        #{detailhtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailmobilehtml != null">
+        #{detailmobilehtml,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itm94lj.template.model.PmsProductExample" resultType="java.lang.Long">
+    select count(*) from pms_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pms_product
+    <set>
+      <if test="row.productid != null">
+        ProductId = #{row.productid,jdbcType=BIGINT},
+      </if>
+      <if test="row.productName != null">
+        PRODUCT_NAME = #{row.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productPic != null">
+        PRODUCT_PIC = #{row.productPic,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productSn != null">
+        PRODUCT_SN = #{row.productSn,jdbcType=VARCHAR},
+      </if>
+      <if test="row.deleteStatus != null">
+        DELETE_STATUS = #{row.deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="row.publishStatus != null">
+        PUBLISH_STATUS = #{row.publishStatus,jdbcType=INTEGER},
+      </if>
+      <if test="row.newStatus != null">
+        NEW_STATUS = #{row.newStatus,jdbcType=INTEGER},
+      </if>
+      <if test="row.recommandStatus != null">
+        RECOMMAND_STATUS = #{row.recommandStatus,jdbcType=INTEGER},
+      </if>
+      <if test="row.verifyStatus != null">
+        VERIFY_STATUS = #{row.verifyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="row.sale != null">
+        Sale = #{row.sale,jdbcType=INTEGER},
+      </if>
+      <if test="row.price != null">
+        Price = #{row.price,jdbcType=DECIMAL},
+      </if>
+      <if test="row.promotionprice != null">
+        PromotionPrice = #{row.promotionprice,jdbcType=DECIMAL},
+      </if>
+      <if test="row.giftgrowth != null">
+        GiftGrowth = #{row.giftgrowth,jdbcType=INTEGER},
+      </if>
+      <if test="row.giftpoint != null">
+        GiftPoint = #{row.giftpoint,jdbcType=INTEGER},
+      </if>
+      <if test="row.usepointlimit != null">
+        UsePointLimit = #{row.usepointlimit,jdbcType=INTEGER},
+      </if>
+      <if test="row.subtitle != null">
+        SubTitle = #{row.subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="row.originalprice != null">
+        OriginalPrice = #{row.originalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="row.stock != null">
+        Stock = #{row.stock,jdbcType=INTEGER},
+      </if>
+      <if test="row.lowstock != null">
+        LowStock = #{row.lowstock,jdbcType=INTEGER},
+      </if>
+      <if test="row.unit != null">
+        Unit = #{row.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="row.weight != null">
+        Weight = #{row.weight,jdbcType=DECIMAL},
+      </if>
+      <if test="row.previewstatus != null">
+        PreviewStatus = #{row.previewstatus,jdbcType=INTEGER},
+      </if>
+      <if test="row.serviceids != null">
+        ServiceIds = #{row.serviceids,jdbcType=VARCHAR},
+      </if>
+      <if test="row.keywords != null">
+        Keywords = #{row.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="row.note != null">
+        Note = #{row.note,jdbcType=VARCHAR},
+      </if>
+      <if test="row.albumpics != null">
+        AlbumPics = #{row.albumpics,jdbcType=VARCHAR},
+      </if>
+      <if test="row.detailtitle != null">
+        DetailTitle = #{row.detailtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="row.promotionstarttime != null">
+        PromotionStartTime = #{row.promotionstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.promotionendtime != null">
+        PromotionEndTime = #{row.promotionendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.promotionperlimit != null">
+        PromotionPerLimit = #{row.promotionperlimit,jdbcType=INTEGER},
+      </if>
+      <if test="row.productcategoryname != null">
+        ProductCategoryName = #{row.productcategoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.brandname != null">
+        BrandName = #{row.brandname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.discription != null">
+        Discription = #{row.discription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="row.detaildesc != null">
+        DetailDesc = #{row.detaildesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="row.detailhtml != null">
+        DetailHtml = #{row.detailhtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="row.detailmobilehtml != null">
+        DetailMobileHtml = #{row.detailmobilehtml,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update pms_product
+    set ProductId = #{row.productid,jdbcType=BIGINT},
+      PRODUCT_NAME = #{row.productName,jdbcType=VARCHAR},
+      PRODUCT_PIC = #{row.productPic,jdbcType=VARCHAR},
+      PRODUCT_SN = #{row.productSn,jdbcType=VARCHAR},
+      DELETE_STATUS = #{row.deleteStatus,jdbcType=INTEGER},
+      PUBLISH_STATUS = #{row.publishStatus,jdbcType=INTEGER},
+      NEW_STATUS = #{row.newStatus,jdbcType=INTEGER},
+      RECOMMAND_STATUS = #{row.recommandStatus,jdbcType=INTEGER},
+      VERIFY_STATUS = #{row.verifyStatus,jdbcType=INTEGER},
+      Sale = #{row.sale,jdbcType=INTEGER},
+      Price = #{row.price,jdbcType=DECIMAL},
+      PromotionPrice = #{row.promotionprice,jdbcType=DECIMAL},
+      GiftGrowth = #{row.giftgrowth,jdbcType=INTEGER},
+      GiftPoint = #{row.giftpoint,jdbcType=INTEGER},
+      UsePointLimit = #{row.usepointlimit,jdbcType=INTEGER},
+      SubTitle = #{row.subtitle,jdbcType=VARCHAR},
+      OriginalPrice = #{row.originalprice,jdbcType=DECIMAL},
+      Stock = #{row.stock,jdbcType=INTEGER},
+      LowStock = #{row.lowstock,jdbcType=INTEGER},
+      Unit = #{row.unit,jdbcType=VARCHAR},
+      Weight = #{row.weight,jdbcType=DECIMAL},
+      PreviewStatus = #{row.previewstatus,jdbcType=INTEGER},
+      ServiceIds = #{row.serviceids,jdbcType=VARCHAR},
+      Keywords = #{row.keywords,jdbcType=VARCHAR},
+      Note = #{row.note,jdbcType=VARCHAR},
+      AlbumPics = #{row.albumpics,jdbcType=VARCHAR},
+      DetailTitle = #{row.detailtitle,jdbcType=VARCHAR},
+      PromotionStartTime = #{row.promotionstarttime,jdbcType=TIMESTAMP},
+      PromotionEndTime = #{row.promotionendtime,jdbcType=TIMESTAMP},
+      PromotionPerLimit = #{row.promotionperlimit,jdbcType=INTEGER},
+      ProductCategoryName = #{row.productcategoryname,jdbcType=VARCHAR},
+      BrandName = #{row.brandname,jdbcType=VARCHAR},
+      id = #{row.id,jdbcType=BIGINT},
+      Discription = #{row.discription,jdbcType=LONGVARCHAR},
+      DetailDesc = #{row.detaildesc,jdbcType=LONGVARCHAR},
+      DetailHtml = #{row.detailhtml,jdbcType=LONGVARCHAR},
+      DetailMobileHtml = #{row.detailmobilehtml,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pms_product
+    set ProductId = #{row.productid,jdbcType=BIGINT},
+      PRODUCT_NAME = #{row.productName,jdbcType=VARCHAR},
+      PRODUCT_PIC = #{row.productPic,jdbcType=VARCHAR},
+      PRODUCT_SN = #{row.productSn,jdbcType=VARCHAR},
+      DELETE_STATUS = #{row.deleteStatus,jdbcType=INTEGER},
+      PUBLISH_STATUS = #{row.publishStatus,jdbcType=INTEGER},
+      NEW_STATUS = #{row.newStatus,jdbcType=INTEGER},
+      RECOMMAND_STATUS = #{row.recommandStatus,jdbcType=INTEGER},
+      VERIFY_STATUS = #{row.verifyStatus,jdbcType=INTEGER},
+      Sale = #{row.sale,jdbcType=INTEGER},
+      Price = #{row.price,jdbcType=DECIMAL},
+      PromotionPrice = #{row.promotionprice,jdbcType=DECIMAL},
+      GiftGrowth = #{row.giftgrowth,jdbcType=INTEGER},
+      GiftPoint = #{row.giftpoint,jdbcType=INTEGER},
+      UsePointLimit = #{row.usepointlimit,jdbcType=INTEGER},
+      SubTitle = #{row.subtitle,jdbcType=VARCHAR},
+      OriginalPrice = #{row.originalprice,jdbcType=DECIMAL},
+      Stock = #{row.stock,jdbcType=INTEGER},
+      LowStock = #{row.lowstock,jdbcType=INTEGER},
+      Unit = #{row.unit,jdbcType=VARCHAR},
+      Weight = #{row.weight,jdbcType=DECIMAL},
+      PreviewStatus = #{row.previewstatus,jdbcType=INTEGER},
+      ServiceIds = #{row.serviceids,jdbcType=VARCHAR},
+      Keywords = #{row.keywords,jdbcType=VARCHAR},
+      Note = #{row.note,jdbcType=VARCHAR},
+      AlbumPics = #{row.albumpics,jdbcType=VARCHAR},
+      DetailTitle = #{row.detailtitle,jdbcType=VARCHAR},
+      PromotionStartTime = #{row.promotionstarttime,jdbcType=TIMESTAMP},
+      PromotionEndTime = #{row.promotionendtime,jdbcType=TIMESTAMP},
+      PromotionPerLimit = #{row.promotionperlimit,jdbcType=INTEGER},
+      ProductCategoryName = #{row.productcategoryname,jdbcType=VARCHAR},
+      BrandName = #{row.brandname,jdbcType=VARCHAR},
+      id = #{row.id,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itm94lj.template.model.PmsProduct">
+    update pms_product
+    <set>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPic != null">
+        PRODUCT_PIC = #{productPic,jdbcType=VARCHAR},
+      </if>
+      <if test="productSn != null">
+        PRODUCT_SN = #{productSn,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null">
+        DELETE_STATUS = #{deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="publishStatus != null">
+        PUBLISH_STATUS = #{publishStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newStatus != null">
+        NEW_STATUS = #{newStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recommandStatus != null">
+        RECOMMAND_STATUS = #{recommandStatus,jdbcType=INTEGER},
+      </if>
+      <if test="verifyStatus != null">
+        VERIFY_STATUS = #{verifyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sale != null">
+        Sale = #{sale,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        Price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionprice != null">
+        PromotionPrice = #{promotionprice,jdbcType=DECIMAL},
+      </if>
+      <if test="giftgrowth != null">
+        GiftGrowth = #{giftgrowth,jdbcType=INTEGER},
+      </if>
+      <if test="giftpoint != null">
+        GiftPoint = #{giftpoint,jdbcType=INTEGER},
+      </if>
+      <if test="usepointlimit != null">
+        UsePointLimit = #{usepointlimit,jdbcType=INTEGER},
+      </if>
+      <if test="subtitle != null">
+        SubTitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="originalprice != null">
+        OriginalPrice = #{originalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null">
+        Stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="lowstock != null">
+        LowStock = #{lowstock,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        Unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        Weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="previewstatus != null">
+        PreviewStatus = #{previewstatus,jdbcType=INTEGER},
+      </if>
+      <if test="serviceids != null">
+        ServiceIds = #{serviceids,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null">
+        Keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        Note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="albumpics != null">
+        AlbumPics = #{albumpics,jdbcType=VARCHAR},
+      </if>
+      <if test="detailtitle != null">
+        DetailTitle = #{detailtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionstarttime != null">
+        PromotionStartTime = #{promotionstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionendtime != null">
+        PromotionEndTime = #{promotionendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionperlimit != null">
+        PromotionPerLimit = #{promotionperlimit,jdbcType=INTEGER},
+      </if>
+      <if test="productcategoryname != null">
+        ProductCategoryName = #{productcategoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="brandname != null">
+        BrandName = #{brandname,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="discription != null">
+        Discription = #{discription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detaildesc != null">
+        DetailDesc = #{detaildesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailhtml != null">
+        DetailHtml = #{detailhtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailmobilehtml != null">
+        DetailMobileHtml = #{detailmobilehtml,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ProductId = #{productid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.itm94lj.template.model.PmsProduct">
+    update pms_product
+    set PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_PIC = #{productPic,jdbcType=VARCHAR},
+      PRODUCT_SN = #{productSn,jdbcType=VARCHAR},
+      DELETE_STATUS = #{deleteStatus,jdbcType=INTEGER},
+      PUBLISH_STATUS = #{publishStatus,jdbcType=INTEGER},
+      NEW_STATUS = #{newStatus,jdbcType=INTEGER},
+      RECOMMAND_STATUS = #{recommandStatus,jdbcType=INTEGER},
+      VERIFY_STATUS = #{verifyStatus,jdbcType=INTEGER},
+      Sale = #{sale,jdbcType=INTEGER},
+      Price = #{price,jdbcType=DECIMAL},
+      PromotionPrice = #{promotionprice,jdbcType=DECIMAL},
+      GiftGrowth = #{giftgrowth,jdbcType=INTEGER},
+      GiftPoint = #{giftpoint,jdbcType=INTEGER},
+      UsePointLimit = #{usepointlimit,jdbcType=INTEGER},
+      SubTitle = #{subtitle,jdbcType=VARCHAR},
+      OriginalPrice = #{originalprice,jdbcType=DECIMAL},
+      Stock = #{stock,jdbcType=INTEGER},
+      LowStock = #{lowstock,jdbcType=INTEGER},
+      Unit = #{unit,jdbcType=VARCHAR},
+      Weight = #{weight,jdbcType=DECIMAL},
+      PreviewStatus = #{previewstatus,jdbcType=INTEGER},
+      ServiceIds = #{serviceids,jdbcType=VARCHAR},
+      Keywords = #{keywords,jdbcType=VARCHAR},
+      Note = #{note,jdbcType=VARCHAR},
+      AlbumPics = #{albumpics,jdbcType=VARCHAR},
+      DetailTitle = #{detailtitle,jdbcType=VARCHAR},
+      PromotionStartTime = #{promotionstarttime,jdbcType=TIMESTAMP},
+      PromotionEndTime = #{promotionendtime,jdbcType=TIMESTAMP},
+      PromotionPerLimit = #{promotionperlimit,jdbcType=INTEGER},
+      ProductCategoryName = #{productcategoryname,jdbcType=VARCHAR},
+      BrandName = #{brandname,jdbcType=VARCHAR},
+      id = #{id,jdbcType=BIGINT},
+      Discription = #{discription,jdbcType=LONGVARCHAR},
+      DetailDesc = #{detaildesc,jdbcType=LONGVARCHAR},
+      DetailHtml = #{detailhtml,jdbcType=LONGVARCHAR},
+      DetailMobileHtml = #{detailmobilehtml,jdbcType=LONGVARCHAR}
+    where ProductId = #{productid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itm94lj.template.model.PmsProduct">
+    update pms_product
+    set PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_PIC = #{productPic,jdbcType=VARCHAR},
+      PRODUCT_SN = #{productSn,jdbcType=VARCHAR},
+      DELETE_STATUS = #{deleteStatus,jdbcType=INTEGER},
+      PUBLISH_STATUS = #{publishStatus,jdbcType=INTEGER},
+      NEW_STATUS = #{newStatus,jdbcType=INTEGER},
+      RECOMMAND_STATUS = #{recommandStatus,jdbcType=INTEGER},
+      VERIFY_STATUS = #{verifyStatus,jdbcType=INTEGER},
+      Sale = #{sale,jdbcType=INTEGER},
+      Price = #{price,jdbcType=DECIMAL},
+      PromotionPrice = #{promotionprice,jdbcType=DECIMAL},
+      GiftGrowth = #{giftgrowth,jdbcType=INTEGER},
+      GiftPoint = #{giftpoint,jdbcType=INTEGER},
+      UsePointLimit = #{usepointlimit,jdbcType=INTEGER},
+      SubTitle = #{subtitle,jdbcType=VARCHAR},
+      OriginalPrice = #{originalprice,jdbcType=DECIMAL},
+      Stock = #{stock,jdbcType=INTEGER},
+      LowStock = #{lowstock,jdbcType=INTEGER},
+      Unit = #{unit,jdbcType=VARCHAR},
+      Weight = #{weight,jdbcType=DECIMAL},
+      PreviewStatus = #{previewstatus,jdbcType=INTEGER},
+      ServiceIds = #{serviceids,jdbcType=VARCHAR},
+      Keywords = #{keywords,jdbcType=VARCHAR},
+      Note = #{note,jdbcType=VARCHAR},
+      AlbumPics = #{albumpics,jdbcType=VARCHAR},
+      DetailTitle = #{detailtitle,jdbcType=VARCHAR},
+      PromotionStartTime = #{promotionstarttime,jdbcType=TIMESTAMP},
+      PromotionEndTime = #{promotionendtime,jdbcType=TIMESTAMP},
+      PromotionPerLimit = #{promotionperlimit,jdbcType=INTEGER},
+      ProductCategoryName = #{productcategoryname,jdbcType=VARCHAR},
+      BrandName = #{brandname,jdbcType=VARCHAR},
+      id = #{id,jdbcType=BIGINT}
+    where ProductId = #{productid,jdbcType=BIGINT}
+  </update>
+</mapper>
