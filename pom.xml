@@ -11,6 +11,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>Demo</module>
+        <module>template-common</module>
+        <module>template-mbg</module>
     </modules>
 
     <parent>
@@ -50,6 +52,8 @@
         <minio.version>8.4.1</minio.version>
         <knife4j.version>3.0.3</knife4j.version>
         <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
+        <template-common.version>1.0-SNAPSHOT</template-common.version>
+        <template-mbg.version>1.0-SNAPSHOT</template-mbg.version>
     </properties>
 
     <dependencies>
@@ -205,6 +209,18 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.itm94lj.template</groupId>
+                <artifactId>template-common</artifactId>
+                <version>${template-common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.itm94lj.template</groupId>
+                <artifactId>template-mbg</artifactId>
+                <version>${template-mbg.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
